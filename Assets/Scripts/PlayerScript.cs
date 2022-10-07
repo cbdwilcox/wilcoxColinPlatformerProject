@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     //========================================
     // REFERENCES/VARIABLES
     //========================================
+
+    public TMP_Text MoveKeys;
 
     // ----- Animation States -----
     private enum State { Idle, Run, Rise, Fall, Crouch, CrouchWalk, Slide, Basic1 }
@@ -34,6 +37,12 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+        // this is only here for now ill make a gamesystem script later
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            MoveKeys.enabled = false;
+        }
+
         //========================================
         // PLAYER MOVEMENT CALCULATIONS/INPUT
         //========================================
