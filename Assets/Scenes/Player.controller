@@ -664,7 +664,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c542e106d5f3644bd26049ddbff5a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackPoint: {fileID: 0}
   Timer: 2
+  AttackRange: 2
+  EnemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1102 &8546691513889585373
 AnimatorState:
   serializedVersion: 6

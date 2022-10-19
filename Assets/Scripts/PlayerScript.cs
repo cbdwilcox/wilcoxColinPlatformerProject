@@ -5,6 +5,18 @@ using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
+    //GIZMO SHIT
+
+    public Transform AttackPoint;
+    public float AttackRange = 0.5f;
+
+    private void OnDrawGizmosSelected()
+    {
+        if (AttackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
+    }
 
     //========================================
     // REFERENCES/VARIABLES
