@@ -37,7 +37,7 @@ public class PlayerBasic1Script : StateMachineBehaviour
         anim = GameObject.Find("Player").GetComponent<Animator>();
 
         EnemyLayers = LayerMask.GetMask("Enemies");
-        AttackPoint = GameObject.Find("AttackPoint").transform;
+        AttackPoint = GameObject.Find("PunchPoint").transform;
         
         // ----- Hit Detection -----
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, AttackRange, EnemyLayers);
@@ -46,7 +46,7 @@ public class PlayerBasic1Script : StateMachineBehaviour
         {
             Debug.Log("We hit" + enemy.name);
 
-            enemy.GetComponent<EnemyOneScript>().GremlinDamaged();
+            enemy.GetComponent<StarGremlinScript>().LightHit();
         }
 
     }
