@@ -10,7 +10,6 @@ public class PlayerScript : MonoBehaviour
 
     public Transform PunchPoint;
     public float AttackRange = 0.5f;
-    public int ForceDirSource = 1;
 
     private void OnDrawGizmosSelected()
     {
@@ -39,7 +38,7 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody2D rb2d;
 
     // ----- Vectors -----
-    public Vector2 JumpForce = new Vector2(0, 500);
+    Vector2 JumpForce = new Vector2(0, 1500);
 
     // ----- Floats & Integers -----
     public float PlayerSpeed;
@@ -47,6 +46,8 @@ public class PlayerScript : MonoBehaviour
     // ----- Booleans -----
     private bool IsGrounded;
     private bool FacingRight = true;
+
+    // ----- Layer Masks -----
 
     private void Start()
     {
@@ -112,7 +113,7 @@ public class PlayerScript : MonoBehaviour
             SetState();
         }
 
-        if (rb2d.velocity.y > 0 && !IsGrounded)
+        if (rb2d.velocity.y > 0.1f && !IsGrounded)
         {
             state = State.Rise;
             SetState();
@@ -168,16 +169,36 @@ public class PlayerScript : MonoBehaviour
 
     public void ClawHit()
     {
+        Vector2 lightForceR = new Vector2(-200, 0);
+        Vector2 lightForceL = new Vector2(200, 0);
+
+        rb2d.velocity = Vector2.zero;
+
+        if (FacingRight)
+        {
+            rb2d.AddForce(lightForceR);
+        }
+
+        else if (!FacingRight)
+        {
+            rb2d.AddForce(lightForceL);
+        }
+
         CurrentHP -= 20;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 7)
-        {
-            CollisionInvuln();
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.layer == 7)
+    //    {
+    //        Debug.Log("Collided with Enemy");
+
+    //        CollisionInvuln();
+
+    //        CurrentHP += 10;
+    //        ClawHit();
+    //    }
+    //}
 
     //========================================
     // DEATH FUNCTION
@@ -211,8 +232,6 @@ public class PlayerScript : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-
-        ForceDirSource *= -1;
     }
 
     // ----- Setting Animation States -----

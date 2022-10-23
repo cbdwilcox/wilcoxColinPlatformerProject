@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 945947113}
+  Stagger: 0
   HitPoints: 100
   CurrentHP: 0
 --- !u!1 &199081193
@@ -484,7 +485,7 @@ GameObject:
   - component: {fileID: 773829782}
   - component: {fileID: 773829781}
   - component: {fileID: 773829780}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Test Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,13 +804,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PunchPoint: {fileID: 1930483618}
   AttackRange: 2
-  ForceDirSource: 0
   Health: {fileID: 1838936235}
   StarGremlin: {fileID: 49338951}
   GameSystem: {fileID: 1844378940}
   anim: {fileID: 945947119}
   rb2d: {fileID: 945947115}
-  JumpForce: {x: 0, y: 1000}
   PlayerSpeed: 30
   MaxHP: 0
   CurrentHP: 0

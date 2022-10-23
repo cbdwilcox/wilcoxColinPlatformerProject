@@ -16,8 +16,6 @@ public class PlayerBasic1Script : StateMachineBehaviour
     Animator anim;
     public Transform AttackPoint;
 
-    // ----- Vectors -----
-
     // ----- Floats & Integers -----
     public float Timer;
 

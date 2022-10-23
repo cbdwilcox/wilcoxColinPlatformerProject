@@ -21,21 +21,28 @@ public class StarGremlinScript : MonoBehaviour
     Rigidbody2D rb2d;
 
     // ----- Floats & Integers -----
-    int ForceDir;
 
     // ----- Booleans -----
+    bool IsGrounded;
+
     bool Alert;
     private bool FacingRight = true;
+
+    bool PlayerInvuln = false;
+
+    public bool Stagger = false;
 
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody2D>();
 
+        Player = GameObject.Find("Player");
+
         CurrentHP = HitPoints;
-        ForceDir = GameObject.Find("Player").GetComponent<PlayerScript>().ForceDirSource;
 
         Alert = false;
+        Stagger = false;
     }
 
     void Update()
@@ -47,12 +54,24 @@ public class StarGremlinScript : MonoBehaviour
             Die();
         }
 
+        // ----- Ground Check -----
+
+        if (rb2d.velocity.y == 0)
+        {
+            IsGrounded = true;
+        }
+        else
+        {
+            IsGrounded = false;
+        }
+
         //========================================
         // ???
         //========================================
 
         // ----- Player Distance Calculation -----
         float distance = Vector3.Distance(Player.transform.position, gameObject.transform.position);
+        //Debug.Log(distance);
 
         //Debug.Log(distance);
 
@@ -64,18 +83,46 @@ public class StarGremlinScript : MonoBehaviour
             SetState();
         }
 
-        // ----- Enemy Attack AI -----
+        // ----- Enemy AI -----
+        Vector2 rightMove = new Vector2(35, 0);
+        Vector2 leftMove = new Vector2(-35, 0);
 
-        if (Mathf.Abs(distance) < 10f && Alert)
+        if (!Stagger)
         {
-
-            state = State.Claw;
-            SetState();
-        }
-
-        if (Mathf.Abs(distance) > 10f && Alert)
+            if(Mathf.Abs(distance) < 4.4f && Alert)
         {
-            state = State.Spit;
+                state = State.Claw;
+                SetState();
+            }
+
+            if (Mathf.Abs(distance) > 4.4 && Mathf.Abs(distance) < 14.5f && Alert && IsGrounded)
+            {
+                state = State.Run;
+                SetState();
+
+                if (state == State.Run && FacingRight && !PlayerInvuln && IsGrounded)
+                {
+                    rb2d.velocity = Vector2.zero;
+                    rb2d.AddForce(rightMove);
+                }
+
+                if (state == State.Run && !FacingRight && !PlayerInvuln && IsGrounded)
+                {
+                    rb2d.velocity = Vector2.zero;
+                    rb2d.AddForce(leftMove);
+                }
+            }
+
+            if (Mathf.Abs(distance) > 14.5f && Alert)
+            {
+                state = State.Spit;
+                SetState();
+            }
+        }    
+
+        if (Stagger)
+        {
+            state = State.Idle;
             SetState();
         }
 
@@ -94,7 +141,21 @@ public class StarGremlinScript : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            PlayerInvuln = true;
+            InvulnCooldown();
+        }
+    }
 
+    IEnumerator InvulnCooldown()
+    {
+        yield return new WaitForSeconds(3);
+
+        PlayerInvuln = false;
+    }
 
     //========================================
     // DAMAGE FUNCTIONS
@@ -107,25 +168,50 @@ public class StarGremlinScript : MonoBehaviour
     // ----- Fists of Sol -----
     public void LightHit()
     {
-        Debug.Log("Hit Star Gremlin with Light Attack!");
-
-        Vector2 lightForce = new Vector2(200, 100);
-        // ForceDir not working????
+        Vector2 lightForceR = new Vector2(200, 100);
+        Vector2 lightForceL = new Vector2(-200, 100);
 
         rb2d.velocity = Vector2.zero;
-        rb2d.AddForce(lightForce);
+
+        if (FacingRight)
+        {
+            rb2d.AddForce(lightForceR);
+        }
+
+        else if (!FacingRight)
+        {
+            rb2d.AddForce(lightForceL);
+        }
 
         CurrentHP -= 30;
+
+        Stagger = true;
+
+        Invoke("ResetStagger", 2);
+        
     }
 
     public void HeavyHit()
     {
-        Vector2 heavyForce = new Vector2(200 * ForceDir, 0);
+        Vector2 heavyForceR = new Vector2(400, 200);
+        Vector2 heavyForceL = new Vector2(-400, 200);
 
         rb2d.velocity = Vector2.zero;
-        rb2d.AddForce(heavyForce);
+
+        if (FacingRight)
+        {
+            rb2d.AddForce(heavyForceR);
+        }
+
+        else if (!FacingRight)
+        {
+            rb2d.AddForce(heavyForceL);
+        }
 
         CurrentHP -= 50;
+
+        Stagger = true;
+        ResetStagger();
     }
 
     // ----- Sunsling -----
@@ -149,6 +235,11 @@ public class StarGremlinScript : MonoBehaviour
     //========================================
 
     // ----- Sprite Flipping Function -----
+
+    void ResetStagger()
+    {
+        Stagger = false;
+    }
     void SpriteFlip()
     {
         FacingRight = !FacingRight;
