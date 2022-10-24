@@ -101,7 +101,7 @@ public class StarGremlinScript : MonoBehaviour
                 SetState();
             }
 
-            if (Mathf.Abs(distance) > 4.4 && Mathf.Abs(distance) < 14.5f && Alert && IsGrounded || Mathf.Abs(distance) > 21 && Alert && IsGrounded)
+            if (Mathf.Abs(distance) > 4.5 && Mathf.Abs(distance) < 14.5f && Alert && IsGrounded || Mathf.Abs(distance) > 21 && Alert && IsGrounded)
             {
                 state = State.Run;
                 SetState();
@@ -119,11 +119,13 @@ public class StarGremlinScript : MonoBehaviour
                 }
             }
 
-            if (Mathf.Abs(distance) > 14.5f && Mathf.Abs(distance) < 21 && Alert)
-            {
-                state = State.Spit;
-                SetState();
-            }
+            // NOTE: FIX ALL THIS LATER!
+
+            //if (Mathf.Abs(distance) > 4.5f && Mathf.Abs(distance) < 21 && Alert)
+            //{
+            //    state = State.Spit;
+            //    SetState();
+            //}
 
             float idFK = rb2d.velocity.y;
 

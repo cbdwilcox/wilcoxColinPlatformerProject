@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class SpitScript : StateMachineBehaviour
 {
-    Vector3 SpitSpawn;
+    public Vector3 SpitSpawn;
+
+    public GameObject SpitPoint;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        SpitSpawn = GameObject.Find("SpitPoint").transform.position;
+        //SpitSpawn = GameObject.Find("SpitPoint").transform.position;
+
+        //SpitPoint = Resources.Load("Prefabs/StarGremlin") as GameObject;
+
+        SpitSpawn = SpitPoint.transform.position;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

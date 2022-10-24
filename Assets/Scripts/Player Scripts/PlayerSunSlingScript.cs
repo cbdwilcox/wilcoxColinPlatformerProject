@@ -24,9 +24,11 @@ public class PlayerSunSlingScript : MonoBehaviour
 
     void Start()
     {
-        SunSlingPointB = GameObject.Find("SunSlingPoint");
+        //SunSlingPointB = GameObject.Find("SunSlingPoint");
 
         // =======
+
+        SunSlingRange = 1.2f;
 
         EnemyLayers = LayerMask.GetMask("Enemies");
 
@@ -54,12 +56,14 @@ public class PlayerSunSlingScript : MonoBehaviour
     {
         Vector3 sunPos = gameObject.transform.position;
 
-        Vector3 difference = Trajectory - SunSlingPointB.transform.position;
-        float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        //Vector3 difference = Trajectory - SunSlingPointB.transform.position;
+        //float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
 
-        SunSlingPointB.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+        //SunSlingPointB.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
-        SunSlingPoint = GameObject.Find("SunSlingPoint").transform;
+        //SunSlingPoint = GameObject.Find("SunSlingPoint").transform;
+
+        SunSlingPoint = gameObject.transform;
 
         gameObject.transform.position = Vector3.MoveTowards(sunPos, Trajectory, 15 * Time.deltaTime);
     }

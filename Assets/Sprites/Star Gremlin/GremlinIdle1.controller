@@ -271,6 +271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b686c8ec7ea0e4a45a99980b83407c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpitSpawn: {x: 0, y: 0, z: 0}
+  SpitPoint: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
 --- !u!1101 &8308729289587860122
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
