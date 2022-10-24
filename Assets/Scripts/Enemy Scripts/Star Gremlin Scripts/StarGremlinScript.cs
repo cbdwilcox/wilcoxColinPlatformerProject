@@ -71,7 +71,6 @@ public class StarGremlinScript : MonoBehaviour
 
         // ----- Player Distance Calculation -----
         float distance = Vector3.Distance(Player.transform.position, gameObject.transform.position);
-        //Debug.Log(distance);
 
         //Debug.Log(distance);
 
@@ -84,18 +83,25 @@ public class StarGremlinScript : MonoBehaviour
         }
 
         // ----- Enemy AI -----
-        Vector2 rightMove = new Vector2(35, 0);
-        Vector2 leftMove = new Vector2(-35, 0);
+
+
+
+        Vector2 rightMove = new Vector2(40, 0);
+        Vector2 leftMove = new Vector2(-40, 0);
 
         if (!Stagger)
         {
-            if(Mathf.Abs(distance) < 4.4f && Alert)
-        {
+            //if (Mathf.Abs(distance) <)
+
+            if(Mathf.Abs(distance) < 4.5f && Alert)
+            {
+                rb2d.velocity = Vector2.zero;
+
                 state = State.Claw;
                 SetState();
             }
 
-            if (Mathf.Abs(distance) > 4.4 && Mathf.Abs(distance) < 14.5f && Alert && IsGrounded)
+            if (Mathf.Abs(distance) > 4.4 && Mathf.Abs(distance) < 14.5f && Alert && IsGrounded || Mathf.Abs(distance) > 21 && Alert && IsGrounded)
             {
                 state = State.Run;
                 SetState();
@@ -113,10 +119,19 @@ public class StarGremlinScript : MonoBehaviour
                 }
             }
 
-            if (Mathf.Abs(distance) > 14.5f && Alert)
+            if (Mathf.Abs(distance) > 14.5f && Mathf.Abs(distance) < 21 && Alert)
             {
                 state = State.Spit;
                 SetState();
+            }
+
+            float idFK = rb2d.velocity.y;
+
+            Vector2 aaAA = new Vector2(0, idFK);
+
+            if (state == State.Spit)
+            {
+                rb2d.velocity = aaAA;
             }
         }    
 
@@ -147,6 +162,8 @@ public class StarGremlinScript : MonoBehaviour
         {
             PlayerInvuln = true;
             InvulnCooldown();
+
+            rb2d.velocity = Vector2.zero;
         }
     }
 
@@ -193,8 +210,8 @@ public class StarGremlinScript : MonoBehaviour
 
     public void HeavyHit()
     {
-        Vector2 heavyForceR = new Vector2(400, 200);
-        Vector2 heavyForceL = new Vector2(-400, 200);
+        Vector2 heavyForceR = new Vector2(400, 400);
+        Vector2 heavyForceL = new Vector2(-400, 400);
 
         rb2d.velocity = Vector2.zero;
 
@@ -211,7 +228,8 @@ public class StarGremlinScript : MonoBehaviour
         CurrentHP -= 50;
 
         Stagger = true;
-        ResetStagger();
+
+        Invoke("ResetStagger", 2);
     }
 
     // ----- Sunsling -----

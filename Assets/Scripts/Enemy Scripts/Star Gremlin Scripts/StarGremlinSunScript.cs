@@ -9,21 +9,35 @@ public class StarGremlinSunScript : MonoBehaviour
 
     LayerMask PlayerLayer;
 
+    float Timer;
+
+    Vector3 PlayerPos;
+
     void Start()
     {
         Player = GameObject.Find("Player");
 
         PlayerLayer = 6;
+
+        Timer = 2.5f;
+
+        PlayerPos = Player.transform.position;
     }
 
     void Update()
     {
-        Vector3 playerPos = Player.transform.position;
+        //Vector3 playerPos = Player.transform.position;
         Vector3 sunPos = gameObject.transform.position;
 
         float speed = 10 * Time.deltaTime;
 
-        gameObject.transform.position = Vector3.MoveTowards(sunPos, playerPos, speed);
+        gameObject.transform.position = Vector3.MoveTowards(sunPos, PlayerPos, speed);
+
+        Timer -= Time.deltaTime;
+        if (Timer <= 0)
+        {
+            Destroy(gameObject);
+        }
 
     }
 

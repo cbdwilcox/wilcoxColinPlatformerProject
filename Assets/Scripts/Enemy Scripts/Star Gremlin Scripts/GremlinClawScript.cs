@@ -32,7 +32,7 @@ public class GremlinClawScript : StateMachineBehaviour
 
         Player = GameObject.Find("Player");
 
-        HitTime = 0.5f;
+        HitTime = 1.05f;
         HasHit = false;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

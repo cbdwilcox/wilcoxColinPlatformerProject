@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: b686c8ec7ea0e4a45a99980b83407c6a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - GremlinSunBall: {fileID: 7945173382519124469, guid: 2459e93613245534b86a36b5fa728d28, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

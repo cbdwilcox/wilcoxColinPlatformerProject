@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour
     //========================================
 
     public TMP_Text Health;
+    public TMP_Text ManaText;
 
     // ----- Animation States -----
     private enum State { Idle, Run, Rise, Fall, Crouch, CrouchWalk, Slide, Basic1 }
@@ -43,22 +44,36 @@ public class PlayerScript : MonoBehaviour
     // ----- Floats & Integers -----
     public float PlayerSpeed;
 
+    public int Mana;
+
     // ----- Booleans -----
     private bool IsGrounded;
     private bool FacingRight = true;
+
+    private bool Invuln;
+
+    private bool IsDashing = false;
+
+    Vector3 SunSpawn;
 
     // ----- Layer Masks -----
 
     private void Start()
     {
-        MaxHP = 100;
+        Mana = 0;
+
+        MaxHP = 300;
         CurrentHP = MaxHP;
         anim.SetInteger("BasicState", 0);
     }
 
     private void Update()
     {
+
+        SunSpawn = GameObject.Find("PunchPoint").transform.position;
+
         Health.text = "" + CurrentHP;
+        ManaText.text = "Mana: " + Mana;
 
         if (CurrentHP <= 0)
         {
@@ -99,6 +114,14 @@ public class PlayerScript : MonoBehaviour
         // PLAYER MOVEMENT ANIMATIONS
         //========================================
 
+        //if (!IsGrounded && state == State.Idle)
+        //{
+        //    state = State.Fall;
+        //    SetState();
+        //    anim.SetBool("GroundPound", false);
+            
+        //}
+
         // ----- Basic Movement States -----
 
         if (Input.GetButton("Horizontal") && IsGrounded)
@@ -137,6 +160,27 @@ public class PlayerScript : MonoBehaviour
             SpriteFlip();
         }
 
+        // ----- Solar Slide Ability -----
+        if (Input.GetMouseButtonDown(1) && !IsDashing)
+        {
+            StartCoroutine(CollisionInvuln());
+
+            Vector2 slideLeft = new Vector2(-1500, 0);
+            Vector2 slideRight = new Vector2(1500, 0);
+
+            if (FacingRight)
+            {
+                rb2d.AddForce(slideRight);
+            }
+
+            if (!FacingRight)
+            {
+                rb2d.AddForce(slideLeft);
+            }
+
+            IsDashing = true;
+        }
+
         //========================================
         // PLAYER BASIC COMBO
         //========================================
@@ -150,10 +194,42 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !IsGrounded)
         {
+            anim.SetBool("GroundPound", true);
+
             anim.SetInteger("BasicState", 3);
             state = State.Idle;
-            anim.SetBool("GroundPound", true);
             SetState();
+        }
+
+        //========================================
+        // PLAYER SPELLCASTING
+        //========================================
+
+        // ----- Sun Sling -----
+        if (Input.GetKeyDown(KeyCode.E) && Mana >= 3)
+        {
+            Instantiate(Resources.Load("Prefabs/SunBall") as GameObject, SunSpawn, Quaternion.identity);
+
+            Mana -= 2;
+        }
+
+        //========================================
+        // PLAYER I-FRAMES
+        //========================================
+
+        if (Invuln)
+        {
+            Physics2D.IgnoreLayerCollision(6, 7, true);
+            Physics2D.IgnoreLayerCollision(6, 9, true);
+
+            //Debug.Log("Invulnerable");
+        }
+
+        else if (!Invuln)
+        {
+            Physics2D.IgnoreLayerCollision(6, 7, false);
+            Physics2D.IgnoreLayerCollision(6, 9, false);
+            //Debug.Log("Not Invulnerable");
         }
     }
 
@@ -187,18 +263,25 @@ public class PlayerScript : MonoBehaviour
         CurrentHP -= 20;
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.layer == 7)
-    //    {
-    //        Debug.Log("Collided with Enemy");
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 7)
+        {
+            rb2d.velocity = Vector2.zero;
 
-    //        CollisionInvuln();
+            Debug.Log("Collided with Enemy");
 
-    //        CurrentHP += 10;
-    //        ClawHit();
-    //    }
-    //}
+            StartCoroutine(CollisionInvuln());
+
+            CurrentHP += 10;
+            ClawHit();
+        }
+
+        if (collision.gameObject.tag == "ManaMote")
+        {
+            Mana += 1;
+        }
+    }
 
     //========================================
     // DEATH FUNCTION
@@ -217,11 +300,15 @@ public class PlayerScript : MonoBehaviour
     // ----- Invincibility Frames -----
     IEnumerator CollisionInvuln()
     {
-        Physics2D.IgnoreLayerCollision(6, 7);
+        Invuln = true;
+        Debug.Log("CollisionInvuln Called");
 
         yield return new WaitForSeconds(3);
 
-        Physics2D.IgnoreLayerCollision(6, 7, false);
+        Invuln = false;
+        Debug.Log("CollisionInvuln Complete");
+
+        IsDashing = false;
     }
 
     // ----- Sprite Flipping -----

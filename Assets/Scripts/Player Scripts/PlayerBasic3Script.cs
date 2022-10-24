@@ -8,10 +8,12 @@ public class PlayerBasic3Script : StateMachineBehaviour
     Animator anim;
     public Transform AttackPoint;
 
+    public Vector3 ManaPoint;
+
     // ----- Floats & Integers -----
     public float HitTime;
 
-    public float AttackRange;
+    public float AttackRange = 2.0f;
 
     // ----- Booleans -----
     private bool HasHit = false;
@@ -29,7 +31,8 @@ public class PlayerBasic3Script : StateMachineBehaviour
         anim.SetInteger("BasicState", 0);
 
         EnemyLayers = LayerMask.GetMask("Enemies");
-        AttackPoint = GameObject.Find("PunchPoint").transform;
+        AttackPoint = GameObject.Find("SlamPoint").transform;
+        ManaPoint = AttackPoint.position;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -51,8 +54,9 @@ public class PlayerBasic3Script : StateMachineBehaviour
                 Debug.Log("We hit " + enemy.name + " with a Ground Pound!");
 
                 enemy.GetComponent<StarGremlinScript>().HeavyHit();
-                anim.SetBool("GroundPound", false);
                 HasHit = true;
+
+                Instantiate(Resources.Load("Prefabs/ManaMote") as GameObject, ManaPoint, Quaternion.identity);
             }
         }
     }

@@ -11,6 +11,8 @@ public class PlayerBasic2Script : StateMachineBehaviour
     Animator anim;
     public Transform AttackPoint;
 
+    public Vector3 ManaPoint;
+
     // ----- Floats & Integers -----
     public float Timer;
 
@@ -29,6 +31,7 @@ public class PlayerBasic2Script : StateMachineBehaviour
 
         EnemyLayers = LayerMask.GetMask("Enemies");
         AttackPoint = GameObject.Find("PunchPoint").transform;
+        ManaPoint = AttackPoint.position;
 
         // ----- Hit Detection -----
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, AttackRange, EnemyLayers);
@@ -38,6 +41,8 @@ public class PlayerBasic2Script : StateMachineBehaviour
             Debug.Log("We hit" + enemy.name);
 
             enemy.GetComponent<StarGremlinScript>().LightHit();
+
+            Instantiate(Resources.Load("Prefabs/ManaMote") as GameObject, ManaPoint, Quaternion.identity);
         }
     }
 
