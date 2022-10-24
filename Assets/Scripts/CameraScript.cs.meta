@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: b686c8ec7ea0e4a45a99980b83407c6a
+guid: 112e60449d9981c4a90043a12a2ed95c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - GremlinSunBall: {fileID: 7945173382519124469, guid: 2459e93613245534b86a36b5fa728d28, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

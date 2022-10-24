@@ -261,6 +261,8 @@ public class PlayerScript : MonoBehaviour
         }
 
         CurrentHP -= 20;
+
+        StartCoroutine(CollisionInvuln());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

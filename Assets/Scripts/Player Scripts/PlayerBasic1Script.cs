@@ -16,6 +16,8 @@ public class PlayerBasic1Script : StateMachineBehaviour
     Animator anim;
     public Transform AttackPoint;
 
+    Rigidbody2D rb2d;
+
     public Vector3 ManaPoint;
 
     // ----- Floats & Integers -----

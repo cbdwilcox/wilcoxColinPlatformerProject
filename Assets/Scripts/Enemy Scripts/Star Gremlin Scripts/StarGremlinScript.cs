@@ -20,6 +20,9 @@ public class StarGremlinScript : MonoBehaviour
     Animator anim;
     Rigidbody2D rb2d;
 
+    // ----- Vectors -----
+    Vector3 SpitSpawn;
+
     // ----- Floats & Integers -----
 
     // ----- Booleans -----
@@ -47,6 +50,11 @@ public class StarGremlinScript : MonoBehaviour
 
     void Update()
     {
+
+        SpitSpawn.x = gameObject.transform.position.x;
+        SpitSpawn.y = gameObject.transform.position.y + 2;
+        SpitSpawn.z = gameObject.transform.position.z;
+
         // Hit Points
 
         if (CurrentHP <= 0)
@@ -82,9 +90,7 @@ public class StarGremlinScript : MonoBehaviour
             SetState();
         }
 
-        // ----- Enemy AI -----
-
-
+        // ----- Enemy AI  -----
 
         Vector2 rightMove = new Vector2(40, 0);
         Vector2 leftMove = new Vector2(-40, 0);
@@ -121,11 +127,11 @@ public class StarGremlinScript : MonoBehaviour
 
             // NOTE: FIX ALL THIS LATER!
 
-            //if (Mathf.Abs(distance) > 4.5f && Mathf.Abs(distance) < 21 && Alert)
-            //{
-            //    state = State.Spit;
-            //    SetState();
-            //}
+            if (Mathf.Abs(distance) > 4.5f && Mathf.Abs(distance) < 21 && Alert)
+            {
+                state = State.Spit;
+                SetState();
+            }
 
             float idFK = rb2d.velocity.y;
 
@@ -135,9 +141,9 @@ public class StarGremlinScript : MonoBehaviour
             {
                 rb2d.velocity = aaAA;
             }
-        }    
+        }
 
-        if (Stagger)
+        else  if (Stagger)
         {
             state = State.Idle;
             SetState();
@@ -156,6 +162,13 @@ public class StarGremlinScript : MonoBehaviour
         {
             SpriteFlip();
         }
+    }
+
+    // ----- Gremlin Spit -----
+
+    void SpitAttack()
+    {
+        Instantiate(Resources.Load("Prefabs/StarGremlinSun") as GameObject, SpitSpawn, Quaternion.identity);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -206,7 +219,7 @@ public class StarGremlinScript : MonoBehaviour
 
         Stagger = true;
 
-        Invoke("ResetStagger", 2);
+        Invoke("ResetStagger", 2.5f);
         
     }
 
