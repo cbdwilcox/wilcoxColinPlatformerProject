@@ -299,6 +299,11 @@ public class PlayerScript : MonoBehaviour
         {
             Mana += 1;
         }
+
+        if (collision.gameObject.tag == "hurtbox")
+        {
+            ClawHit();
+        }
     }
 
     //========================================

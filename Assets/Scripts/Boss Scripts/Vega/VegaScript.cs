@@ -5,6 +5,11 @@ using UnityEngine;
 public class VegaScript : MonoBehaviour
 {
 
+    public void SetGravZero()
+    {
+        rb2d.gravityScale = 0;
+    }
+
     //========================================
     // REFERENCES/VARIABLES
     //========================================
@@ -42,21 +47,17 @@ public class VegaScript : MonoBehaviour
     bool Alert;
     private bool FacingRight = true;
 
-    bool PlayerInvuln = false;
-
     public bool Stagger = false;
 
     bool MoveCooldown = false;
     bool WarpCooldown = false;
 
-    bool StageTwo = false;
-
     // ----- Layer Masks -----
     LayerMask PlayerLayer;
 
     // ----- Audio Stuff -----
-
     AudioClip FistHit;
+    AudioClip WarpNoise;
     void Start()
     {
 
@@ -76,6 +77,7 @@ public class VegaScript : MonoBehaviour
         rb2d = gameObject.GetComponent<Rigidbody2D>();
 
         FistHit = Resources.Load("Sounds/fisthitdemo") as AudioClip;
+        WarpNoise = Resources.Load("Sounds/betterwarpnoise") as AudioClip;
 
         Player = GameObject.Find("Player");
 
@@ -84,6 +86,15 @@ public class VegaScript : MonoBehaviour
 
     void Update()
     {
+        if (gameObject.transform.position.x >= 34)
+        {
+            rb2d.velocity = Vector2.zero;
+        }
+
+        if (IsLunging)
+        {
+            rb2d.gravityScale = 0;
+        }
 
         LeftPoint = LBlastPoint.transform.position;
         RightPoint = RBlastPoint.transform.position;
@@ -118,23 +129,26 @@ public class VegaScript : MonoBehaviour
         {
             state = State.Warp;
             SetState();
+            //AudioSource.PlayClipAtPoint(WarpNoise, Camera.main.transform.position, .5f);
 
             Invoke("ResetPosition", .02f);
 
         }
 
         // ------ Moves -----
-        if (IsGrounded && !MoveCooldown)
+        if (IsGrounded && !MoveCooldown && !IsLunging)
         {
-            int moveRoll = Random.Range(2, 5);
+            int moveRoll = Random.Range(1, 6);
+            //Debug.Log("" + moveRoll);
 
             // ----- Dagger -----
-            if (moveRoll == 2 && Player.transform.position.x >= -34.1f && Player.transform.position.x <= 34.1f)
+            if (moveRoll == 2 && Player.transform.position.x >= -34.1f && Player.transform.position.x <= 34.1f || moveRoll == 1 && Player.transform.position.x >= -34.1f && Player.transform.position.x <= 34.1f)
             {
                 MoveCooldown = true;
                 Invoke("MoveReset", 3);
                 state = State.Warp;
                 SetState();
+                AudioSource.PlayClipAtPoint(WarpNoise, Camera.main.transform.position, .5f);
 
                 Invoke("WarpMe", .025f);
 
@@ -164,45 +178,50 @@ public class VegaScript : MonoBehaviour
 
                 state = State.Warp;
                 SetState();
+                AudioSource.PlayClipAtPoint(WarpNoise, Camera.main.transform.position, .5f);
+                rb2d.velocity = new Vector2(0, 0);
 
-                Invoke("LungeCall", 0.1f);
+                Invoke("LungeCall", 0.5f);
+                rb2d.gravityScale = 0;
 
                 if (Player.transform.position.y >= 14)
                 {
+                    Invoke("Lunge1", 0.52f);
                     rb2d.gravityScale = 0;
-                    Invoke("Lunge1", 0.12f);
                 }
 
                 if (Player.transform.position.y < 14 && Player.transform.position.y >= 4.4)
                 {
+                    Invoke("Lunge2", 0.52f);
                     rb2d.gravityScale = 0;
-                    Invoke("Lunge2", 0.12f);
                 }
 
                 if (Player.transform.position.y < 4.4 && Player.transform.position.y >= -3.4f)
                 {
+                    Invoke("Lunge3", 0.52f);
                     rb2d.gravityScale = 0;
-                    Invoke("Lunge3", 0.12f);
                 }
 
                 if (Player.transform.position.y < -3.4f)
                 {
+                    Invoke("Lunge4", 0.52f);
                     rb2d.gravityScale = 0;
-                    Invoke("Lunge4", 0.12f);
                 }
 
-                Invoke("MoveReset", 2f);
+                Invoke("MoveReset", 2.5f);
             }
 
             // ----- Call -----
-            if (moveRoll == 5)
+            if (moveRoll == 5 || moveRoll == 6)
             {
+                Debug.Log("CallMove is working.");
                 MoveCooldown = true;
-                state = State.Idle;
+
+                Invoke("CallCall", 0.1f);
+
                 Invoke("MoveReset", 0.2f);
             }
-        }
-
+        } 
 
 
         //========================================
@@ -237,8 +256,6 @@ public class VegaScript : MonoBehaviour
 
         foreach (Collider2D player in hitEnemies)
         {
-
-            Debug.Log("We hit" + player.name);
             Player.GetComponent<PlayerScript>().ClawHit();
         }
     }
@@ -253,49 +270,49 @@ public class VegaScript : MonoBehaviour
         gameObject.transform.position = VegaWarpPoint.transform.position;
     }
 
-    float LungePower = 2000;
+    float LungePower = 3000;
 
     void Lunge1()
     {
-        Debug.Log("Lunge 1!");
+        rb2d.gravityScale = 0;
         Physics2D.IgnoreLayerCollision(6, 7, false);
-        Vector2 lungeForce = new Vector2(LungePower, 0);
+        Vector2 lungeForce = new Vector2(LungePower, 10);
 
         gameObject.transform.position = new Vector2(-36, 15);
         rb2d.AddForce(lungeForce);
-        Invoke("ResetGravity", 1.5f);
+        Invoke("ResetGravity", 2.5f);
     }
     void Lunge2()
     {
-        Debug.Log("Lunge 2!");
+        rb2d.gravityScale = 0;
         Physics2D.IgnoreLayerCollision(6, 7, false);
-        Vector2 lungeForce = new Vector2(LungePower, 0);
+        Vector2 lungeForce = new Vector2(LungePower, 10);
 
         gameObject.transform.position = new Vector2(-36, 6);
         rb2d.AddForce(lungeForce);
-        Invoke("ResetGravity", 1.5f);
+        Invoke("ResetGravity", 2.5f);
     }
 
     void Lunge3()
     {
-        Debug.Log("Lunge 3!");
+        rb2d.gravityScale = 0;
         Physics2D.IgnoreLayerCollision(6, 7, false);
-        Vector2 lungeForce = new Vector2(LungePower, 0);
+        Vector2 lungeForce = new Vector2(LungePower, 10);
 
         gameObject.transform.position = new Vector2(-36, -3.0f);
         rb2d.AddForce(lungeForce);
-        Invoke("ResetGravity", 1.5f);
+        Invoke("ResetGravity", 2.5f);
     }
 
     void Lunge4()
     {
-        Debug.Log("Lunge 4!");
+        rb2d.gravityScale = 0;
         Physics2D.IgnoreLayerCollision(6, 7, false);
-        Vector2 lungeForce = new Vector2(LungePower, 0);
+        Vector2 lungeForce = new Vector2(LungePower, 10);
 
         gameObject.transform.position = new Vector2(-36, -12.8f);
         rb2d.AddForce(lungeForce);
-        Invoke("ResetGravity", 1.5f);
+        Invoke("ResetGravity", 2.5f);
     }
 
     void Blasty()
@@ -313,6 +330,12 @@ public class VegaScript : MonoBehaviour
         }
     }
 
+    void CallFire()
+    {
+        //Debug.Log("CallFire() Called");
+        Instantiate(Resources.Load("Prefabs/StarGremlinSun") as GameObject, LungePoint.transform.position, Quaternion.identity);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6 && IsLunging)
@@ -323,10 +346,18 @@ public class VegaScript : MonoBehaviour
 
             foreach (Collider2D player in hitEnemies)
             {
-
-                Debug.Log("We hit" + player.name);
                 Player.GetComponent<PlayerScript>().ClawHit();
             }
+        }
+
+        if (collision.gameObject.layer == 8 && IsLunging)
+        {
+            rb2d.velocity = new Vector2(0, 0);
+        }
+
+        if (collision.gameObject.tag == "resetbox")
+        {
+            ResetPosition();
         }
     }
 
@@ -356,6 +387,8 @@ public class VegaScript : MonoBehaviour
     {
         state = State.Call;
         SetState();
+
+        Invoke("CallFire", 0.25f);
     }
 
     //========================================
@@ -363,11 +396,14 @@ public class VegaScript : MonoBehaviour
     //========================================
     void ResetGravity()
     {
-        rb2d.gravityScale = 1;
+        rb2d.gravityScale = 5;
     }
     void ResetPosition()
     {
+        AudioSource.PlayClipAtPoint(WarpNoise, Camera.main.transform.position, .5f);
+        Debug.Log("ResetPosition Called");
         WarpCooldown = true;
+        rb2d.velocity = Vector2.zero;
         gameObject.transform.position = new Vector3(-1, 15, 0);
 
         state = State.Idle;
@@ -399,7 +435,7 @@ public class VegaScript : MonoBehaviour
     //========================================
 
     // ----- Hit Points -----
-    public int HitPoints = 100;
+    public int HitPoints = 2000;
     public int CurrentHP;
 
     // ----- Fists of Sol -----

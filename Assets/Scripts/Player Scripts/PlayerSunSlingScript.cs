@@ -14,8 +14,6 @@ public class PlayerSunSlingScript : MonoBehaviour
 
     public float SunSlingRange = 1.2f;
 
-    bool Cooldown;
-
     Camera MainCam;
 
     // ==========
@@ -31,8 +29,6 @@ public class PlayerSunSlingScript : MonoBehaviour
         SunSlingRange = 1.2f;
 
         EnemyLayers = LayerMask.GetMask("Enemies");
-
-        Cooldown = false;
 
         MainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
@@ -78,7 +74,6 @@ public class PlayerSunSlingScript : MonoBehaviour
         else if (collision.gameObject.layer == 7)
         {
             Debug.Log("SUN TEST WORKING");
-            Cooldown = true;
 
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(SunSlingPoint.position, SunSlingRange, EnemyLayers);
 
@@ -86,7 +81,20 @@ public class PlayerSunSlingScript : MonoBehaviour
             {
                 Debug.Log("We burnt " + enemy.name);
 
-                enemy.GetComponent<StarGremlinScript>().LightHit();
+                // ----- Enemies -----
+
+                if (enemy.tag == "StarGremlin")
+                {
+                    enemy.GetComponent<StarGremlinScript>().HeavyHit();
+                }
+
+                // ----- Bosses -----
+
+                if (enemy.tag == "Vega")
+                {
+                    enemy.GetComponent<VegaScript>().HeavyHit();
+                    Debug.Log("Hit Complete");
+                }
 
                 Physics2D.IgnoreCollision(gameObject.GetComponent<CircleCollider2D>(), enemy.GetComponent<CapsuleCollider2D>());
             }
@@ -99,8 +107,4 @@ public class PlayerSunSlingScript : MonoBehaviour
     {
         Destroy(gameObject);
     }    
-    void ResetCooldown()
-    {
-        Cooldown = false;
-    }
 }

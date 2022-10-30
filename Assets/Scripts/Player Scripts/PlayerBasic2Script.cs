@@ -19,7 +19,6 @@ public class PlayerBasic2Script : StateMachineBehaviour
     public float AttackRange;
 
     // ----- Booleans -----
-    private bool Combo = false;
 
     // ----- Layer Masks -----
     public LayerMask EnemyLayers;
