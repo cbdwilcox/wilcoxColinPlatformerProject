@@ -40,7 +40,20 @@ public class PlayerBasic2Script : StateMachineBehaviour
         {
             Debug.Log("We hit" + enemy.name);
 
-            enemy.GetComponent<StarGremlinScript>().LightHit();
+            // ----- Enemies -----
+
+            if (enemy.tag == "StarGremlin")
+            {
+                enemy.GetComponent<StarGremlinScript>().LightHit();
+            }
+
+            // ----- Bosses -----
+
+            if (enemy.tag == "Vega")
+            {
+                enemy.GetComponent<VegaScript>().LightHit();
+                Debug.Log("Hit Complete");
+            }
 
             Instantiate(Resources.Load("Prefabs/ManaMote") as GameObject, ManaPoint, Quaternion.identity);
         }

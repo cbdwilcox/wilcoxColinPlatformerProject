@@ -58,6 +58,9 @@ public class PlayerScript : MonoBehaviour
 
     // ----- Layer Masks -----
 
+    // ----- Audio Stuff -----
+    public AudioClip HitSound;
+
     private void Start()
     {
         Mana = 0;
@@ -219,7 +222,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Invuln)
         {
-            Physics2D.IgnoreLayerCollision(6, 7, true);
+            //Physics2D.IgnoreLayerCollision(6, 7, true);
             Physics2D.IgnoreLayerCollision(6, 9, true);
 
             //Debug.Log("Invulnerable");
@@ -227,7 +230,7 @@ public class PlayerScript : MonoBehaviour
 
         else if (!Invuln)
         {
-            Physics2D.IgnoreLayerCollision(6, 7, false);
+            //Physics2D.IgnoreLayerCollision(6, 7, false);
             Physics2D.IgnoreLayerCollision(6, 9, false);
             //Debug.Log("Not Invulnerable");
         }
@@ -261,8 +264,16 @@ public class PlayerScript : MonoBehaviour
         }
 
         CurrentHP -= 20;
+        AudioSource.PlayClipAtPoint(HitSound, Camera.main.transform.position, .5f);
 
         StartCoroutine(CollisionInvuln());
+    }
+
+    // ----- Vega Boss -----
+
+    public void Lunge()
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -53,7 +53,21 @@ public class PlayerBasic3Script : StateMachineBehaviour
             {
                 Debug.Log("We hit " + enemy.name + " with a Ground Pound!");
 
-                enemy.GetComponent<StarGremlinScript>().HeavyHit();
+                // ----- Enemies -----
+
+                if (enemy.tag == "StarGremlin")
+                {
+                    enemy.GetComponent<StarGremlinScript>().HeavyHit();
+                }
+
+                // ----- Bosses -----
+
+                if (enemy.tag == "Vega")
+                {
+                    enemy.GetComponent<VegaScript>().HeavyHit();
+                    Debug.Log("Hit Complete");
+                }
+
                 HasHit = true;
 
                 Instantiate(Resources.Load("Prefabs/ManaMote") as GameObject, ManaPoint, Quaternion.identity);

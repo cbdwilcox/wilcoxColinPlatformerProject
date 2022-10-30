@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPoint: {fileID: 0}
+  ManaPoint: {x: 0, y: 0, z: 0}
   Timer: 3
   AttackRange: 2
   EnemyLayers:
@@ -444,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPoint: {fileID: 0}
+  ManaPoint: {x: 0, y: 0, z: 0}
   HitTime: 2
   AttackRange: 2
   EnemyLayers:
@@ -766,11 +768,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPoint: {fileID: 0}
+  ManaPoint: {x: 0, y: 0, z: 0}
   Timer: 2
   AttackRange: 2
   EnemyLayers:
     serializedVersion: 2
     m_Bits: 0
+  StarGremlin: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
+  VegaBoss: {fileID: 9094859824774902738, guid: c06d21a59bb7e6046b0a2a316bcfa64e, type: 3}
 --- !u!1102 &8546691513889585373
 AnimatorState:
   serializedVersion: 6

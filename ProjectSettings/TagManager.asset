@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - ManaMote
+  - Vega
+  - StarGremlin
   layers:
   - Default
   - TransparentFX
