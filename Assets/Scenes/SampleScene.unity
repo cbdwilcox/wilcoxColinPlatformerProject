@@ -1081,6 +1081,7 @@ MonoBehaviour:
   rb2d: {fileID: 945947115}
   PlayerSpeed: 30
   Mana: 0
+  HitSound: {fileID: 0}
   MaxHP: 0
   CurrentHP: 0
 --- !u!212 &945947117
