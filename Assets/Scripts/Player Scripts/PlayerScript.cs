@@ -271,10 +271,15 @@ public class PlayerScript : MonoBehaviour
 
     // ----- Vega Boss -----
 
-    public void Lunge()
+    public void DaggerHit()
     {
 
     }
+
+    public void LungeHit()
+    {
+
+    }    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
