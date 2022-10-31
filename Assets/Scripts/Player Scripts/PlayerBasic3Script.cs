@@ -60,6 +60,11 @@ public class PlayerBasic3Script : StateMachineBehaviour
                     enemy.GetComponent<StarGremlinScript>().HeavyHit();
                 }
 
+                if (enemy.tag == "Meteormite")
+                {
+                    enemy.GetComponent<MeteormiteScript>().HeavyHit();
+                }
+
                 // ----- Bosses -----
 
                 if (enemy.tag == "Vega")

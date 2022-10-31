@@ -56,9 +56,14 @@ public class PlayerBasic1Script : StateMachineBehaviour
                 enemy.GetComponent<StarGremlinScript>().LightHit();
             }
 
+            if (enemy.tag == "Meteormite")
+            {
+                enemy.GetComponent<MeteormiteScript>().LightHit();
+            }
+
             // ----- Bosses -----
 
-            if(enemy.tag == "Vega")
+            if (enemy.tag == "Vega")
             {
                 enemy.GetComponent<VegaScript>().LightHit();
                 Debug.Log("Hit Complete");

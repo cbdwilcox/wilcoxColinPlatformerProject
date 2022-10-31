@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody2D rb2d;
 
     // ----- Vectors -----
-    Vector2 JumpForce = new Vector2(0, 1500);
+    Vector2 JumpForce = new Vector2(0, 1700);
 
     // ----- Floats & Integers -----
     public float PlayerSpeed;
@@ -53,6 +53,8 @@ public class PlayerScript : MonoBehaviour
     private bool Invuln;
 
     private bool IsDashing = false;
+
+    bool JumpBypass = false;
 
     Vector3 SunSpawn;
 
@@ -96,7 +98,7 @@ public class PlayerScript : MonoBehaviour
         
         // ----- Y-Axis Movement -----
 
-        if (Input.GetButtonDown("Jump") && IsGrounded)
+        if (Input.GetButtonDown("Jump") && IsGrounded || Input.GetButtonDown("Jump") && JumpBypass)
         {
             rb2d.velocity = Vector2.zero;
             rb2d.AddForce(JumpForce);
@@ -145,7 +147,7 @@ public class PlayerScript : MonoBehaviour
             SetState();
         }
 
-        else if (rb2d.velocity.y < 0 && !IsGrounded)
+        else if (rb2d.velocity.y < -0.1f && !IsGrounded)
         {
             state = State.Fall;
             SetState();
@@ -161,6 +163,11 @@ public class PlayerScript : MonoBehaviour
         else if (xMove < 0 && FacingRight)
         {
             SpriteFlip();
+        }
+
+        if (IsGrounded)
+        {
+
         }
 
         // ----- Solar Slide Ability -----
@@ -300,12 +307,33 @@ public class PlayerScript : MonoBehaviour
             Mana += 1;
         }
 
-        if (collision.gameObject.tag == "hurtbox")
+        if (collision.gameObject.tag == "killbox")
         {
-            ClawHit();
+            PlayerDeath();
+        }
+
+        if (collision.gameObject.tag == "floatingplat")
+        {
+            Debug.Log("this is working");
+            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+
+            JumpBypass = true;
+
+            if (rb2d.velocity.y != 0)
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+            }
+
         }
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "floatingplat")
+        {
+            JumpBypass = false;
+        }
+    }
     //========================================
     // DEATH FUNCTION
     //========================================

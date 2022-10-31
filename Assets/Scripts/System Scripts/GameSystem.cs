@@ -34,4 +34,39 @@ public class GameSystem : MonoBehaviour
             Application.Quit();
         }
     }
+
+    public void QuitDesktop()
+    {
+        Application.Quit();
+    }
+
+    public void LoadTitle()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void LoadWorkshop()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void LoadAst1()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void LoadAst2()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    public void LoadAst3()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+    public void LoadVegaFight()
+    {
+        SceneManager.LoadScene(5);
+    }
 }

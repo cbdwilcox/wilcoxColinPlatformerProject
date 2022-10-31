@@ -9,6 +9,9 @@ TagManager:
   - StarGremlin
   - resetbox
   - hurtbox
+  - floatingplat
+  - Meteormite
+  - killbox
   layers:
   - Default
   - TransparentFX

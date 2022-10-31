@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 60f98c19d06770f468de9a2e8476040b
+  - enabled: 1
+    path: Assets/Scenes/Workshop.unity
+    guid: b63e16d6a8366754a90a48bffce8fab3
+  - enabled: 1
+    path: Assets/Scenes/Asteroid1.unity
+    guid: 13ffafae07dda1343af57632d22ae875
+  - enabled: 1
+    path: Assets/Scenes/Asteroid2.unity
+    guid: 6d7a54740d702fc49936ceccb935a4b9
+  - enabled: 1
+    path: Assets/Scenes/Asteroid3.unity
+    guid: 94e6af270f65d3f479c696cc61d371fa
+  - enabled: 1
+    path: Assets/Scenes/VegaBossStage.unity
+    guid: 695ee7f9ae5def84f870ed6ec5584f52
   m_configObjects: {}
