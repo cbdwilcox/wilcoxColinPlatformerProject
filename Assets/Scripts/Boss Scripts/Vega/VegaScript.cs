@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class VegaScript : MonoBehaviour
 {
@@ -29,6 +32,10 @@ public class VegaScript : MonoBehaviour
 
     public GameObject BlastLeft;
     public GameObject BlastRight;
+
+    public Image WinImage;
+
+    public TMP_Text VegaHealth;
 
     // ----- Components -----
     Animator anim;
@@ -82,10 +89,14 @@ public class VegaScript : MonoBehaviour
         Player = GameObject.Find("Player");
 
         CurrentHP = HitPoints;
+
+        WinImage.enabled = false;
     }
 
     void Update()
     {
+        VegaHealth.text = "Blue Sun Vega: " + CurrentHP;
+
         if (gameObject.transform.position.x >= 34)
         {
             rb2d.velocity = Vector2.zero;
@@ -457,6 +468,8 @@ public class VegaScript : MonoBehaviour
     void Die()
     {
         Debug.Log("Vega has been slain...");
+
+        SceneManager.LoadScene(6);
 
         Destroy(gameObject);
     }

@@ -58,6 +58,11 @@ public class GameSystem : MonoBehaviour
     //    Paused = false;
     //}
 
+
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene(7);
+    }
     public void QuitDesktop()
     {
         Application.Quit();

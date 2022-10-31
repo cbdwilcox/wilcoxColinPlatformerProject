@@ -171,14 +171,11 @@ public class StarGremlinScript : MonoBehaviour
         Instantiate(Resources.Load("Prefabs/StarGremlinSun") as GameObject, SpitSpawn, Quaternion.identity);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.tag == "killbox")
         {
-            PlayerInvuln = true;
-            InvulnCooldown();
-
-            rb2d.velocity = Vector2.zero;
+            Destroy(gameObject);
         }
     }
 
