@@ -8,6 +8,8 @@ public class GameSystem : MonoBehaviour
 {
     public TMP_Text MoveKeys;
 
+    //bool Paused = false;
+
     void Start()
     {
 
@@ -29,11 +31,32 @@ public class GameSystem : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape) && !Paused)
+        //{
+        //    Debug.Log("Game Paused");
+        //    Time.timeScale = 0;
+        //    Paused = true;
+        //    Invoke("PauseSet", 0.5f);
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Escape) && Paused)
+        //{
+        //    Debug.Log("Game Unpaused");
+        //    Time.timeScale = 1;
+        //    Paused = false;
+        //    Invoke("UnpauseSet", 0.5f);
+        //}
     }
+
+    //public void PauseSet()
+    //{
+    //    Paused = true;
+    //}
+
+    //public void UnpauseSet()
+    //{
+    //    Paused = false;
+    //}
 
     public void QuitDesktop()
     {

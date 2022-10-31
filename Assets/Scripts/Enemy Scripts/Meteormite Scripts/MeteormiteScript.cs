@@ -10,6 +10,8 @@ public class MeteormiteScript : MonoBehaviour
 
     // ----- Game Objects -----
     GameObject Player;
+    GameObject LeftMet;
+    GameObject RightMet;
 
     // ----- Components -----
     Rigidbody2D rb2d;
@@ -23,10 +25,17 @@ public class MeteormiteScript : MonoBehaviour
 
     public bool Stagger = false;
 
+    bool ShootCool = false;
+
 
     void Start()
     {
         CurrentHP = HitPoints;
+
+        LeftMet = Resources.Load("Prefabs/LMet") as GameObject;
+        RightMet = Resources.Load("Prefabs/RMet") as GameObject;
+
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
 
         Player = GameObject.Find("Player");
     }
@@ -57,9 +66,6 @@ public class MeteormiteScript : MonoBehaviour
 
         // ----- Enemy AI  -----
 
-        Vector2 rightMove = new Vector2(40, 0);
-        Vector2 leftMove = new Vector2(-40, 0);
-
         if (!Stagger)
         {
 
@@ -70,22 +76,23 @@ public class MeteormiteScript : MonoBehaviour
 
             if (Mathf.Abs(distance) > 4.5 && Mathf.Abs(distance) < 14.5f && Alert && !Stagger || Mathf.Abs(distance) > 21 && Alert)
             {
-                if (FacingRight)
-                {
-                    rb2d.velocity = Vector2.zero;
-                    rb2d.AddForce(rightMove);
-                }
-
-                if (!FacingRight)
-                {
-                    rb2d.velocity = Vector2.zero;
-                    rb2d.AddForce(leftMove);
-                }
+                gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, Player.transform.position, 5 * Time.deltaTime);
             }
 
-            if (Mathf.Abs(distance) > 4.5f && Mathf.Abs(distance) < 21 && Alert && !Stagger)
+            if (Mathf.Abs(distance) > 4.5f && Mathf.Abs(distance) < 21 && Alert && !Stagger && FacingRight && !ShootCool)
             {
-                // SHOOT METEOROID HERE
+                ShootCool = true;
+                Instantiate(RightMet, gameObject.transform.position, Quaternion.identity);
+
+                Invoke("ShootReset", 4);
+            }
+
+            else if (Mathf.Abs(distance) > 4.5f && Mathf.Abs(distance) < 21 && Alert && !Stagger && !FacingRight && !ShootCool)
+            {
+                ShootCool = true;
+                Instantiate(LeftMet, gameObject.transform.position, Quaternion.identity);
+
+                Invoke("ShootReset", 4);
             }
 
             //float idFK = rb2d.velocity.y;
@@ -97,6 +104,25 @@ public class MeteormiteScript : MonoBehaviour
         {
             rb2d.velocity = Vector2.zero;
         }
+
+        //========================================
+        // SPRITE FLIPPING
+        //========================================
+
+        if (Player.transform.position.x < gameObject.transform.position.x && FacingRight)
+        {
+            SpriteFlip();
+        }
+
+        else if (Player.transform.position.x > gameObject.transform.position.x && !FacingRight)
+        {
+            SpriteFlip();
+        }
+    }
+
+    void ShootReset()
+    {
+        ShootCool = false;
     }
 
     //========================================
