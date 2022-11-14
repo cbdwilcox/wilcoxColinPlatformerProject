@@ -10,10 +10,15 @@ public class CameraScript : MonoBehaviour
     Vector3 CamPos;
 
     // Update is called once per frame
+
+    private void Start()
+    {
+        Player = GameObject.Find("Player");
+    }
     void Update()
     {
-        CamPos.x = Mathf.Clamp(Player.transform.position.x, -38f, 38f);
-        CamPos.y = Mathf.Clamp(Player.transform.position.y, -21.4f, 21.4f);
+        CamPos.x = Mathf.Clamp(Player.transform.position.x, -29f, 29f);
+        CamPos.y = Mathf.Clamp(Player.transform.position.y, -16.4f, 16.4f);
         CamPos.z = -10f;
 
         gameObject.transform.position = CamPos;

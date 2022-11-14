@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MeteormiteScript : MonoBehaviour
 {
+
+    Color baseColor;
+    SpriteRenderer spriterend;
+
     //========================================
     // REFERENCES/VARIABLES
     //========================================
@@ -27,6 +31,8 @@ public class MeteormiteScript : MonoBehaviour
 
     bool ShootCool = false;
 
+    // ----- Audio Stuff -----
+    AudioClip FistHit;
 
     void Start()
     {
@@ -34,6 +40,11 @@ public class MeteormiteScript : MonoBehaviour
 
         LeftMet = Resources.Load("Prefabs/LMet") as GameObject;
         RightMet = Resources.Load("Prefabs/RMet") as GameObject;
+
+        FistHit = Resources.Load("Sounds/fisthitdemo") as AudioClip;
+
+        spriterend = gameObject.GetComponent<SpriteRenderer>();
+        baseColor = spriterend.color;
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
 
@@ -66,7 +77,12 @@ public class MeteormiteScript : MonoBehaviour
 
         // ----- Enemy AI  -----
 
-        if (!Stagger)
+        if (Stagger)
+        {
+            //rb2d.velocity = Vector2.zero;
+        }
+
+        else if (!Stagger)
         {
 
             if (Mathf.Abs(distance) < 4.5f && Alert)
@@ -100,11 +116,6 @@ public class MeteormiteScript : MonoBehaviour
             //Vector2 aaAA = new Vector2(0, idFK);
         }
 
-        else if (Stagger)
-        {
-            rb2d.velocity = Vector2.zero;
-        }
-
         //========================================
         // SPRITE FLIPPING
         //========================================
@@ -136,8 +147,11 @@ public class MeteormiteScript : MonoBehaviour
     // ----- Fists of Sol -----
     public void LightHit()
     {
-        Vector2 lightForceR = new Vector2(200, 100);
-        Vector2 lightForceL = new Vector2(-200, 100);
+        Vector2 lightForceR = new Vector2(-400, 100);
+        Vector2 lightForceL = new Vector2(400, 100);
+
+        RedFlash();
+        AudioSource.PlayClipAtPoint(FistHit, Camera.main.transform.position, .5f);
 
         rb2d.velocity = Vector2.zero;
 
@@ -161,10 +175,13 @@ public class MeteormiteScript : MonoBehaviour
 
     public void HeavyHit()
     {
-        Vector2 heavyForceR = new Vector2(400, 400);
-        Vector2 heavyForceL = new Vector2(-400, 400);
+        Vector2 heavyForceR = new Vector2(-600, 400);
+        Vector2 heavyForceL = new Vector2(600, 400);
 
         rb2d.velocity = Vector2.zero;
+
+        RedFlash();
+        AudioSource.PlayClipAtPoint(FistHit, Camera.main.transform.position, .5f);
 
         if (FacingRight)
         {
@@ -196,6 +213,19 @@ public class MeteormiteScript : MonoBehaviour
     //========================================
     // MISCELLANEOUS FUNCTIONS
     //========================================
+
+    // ----- Enemy Hit Visual Function -----
+    void RedFlash()
+    {
+        spriterend.color = baseColor;
+        spriterend.color = Color.red;
+        Invoke("ResetColor", 0.5f);
+    }
+
+    void ResetColor()
+    {
+        spriterend.color = baseColor;
+    }
 
     // ----- Sprite Flipping Function -----
 

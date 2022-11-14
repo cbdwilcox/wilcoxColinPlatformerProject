@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class StarGremlinScript : MonoBehaviour
 {
+    Color baseColor;
+    SpriteRenderer spriterend;
+
     //========================================
     // REFERENCES/VARIABLES
     //========================================
@@ -21,12 +24,12 @@ public class StarGremlinScript : MonoBehaviour
     Rigidbody2D rb2d;
 
     // ----- Vectors -----
-    Vector3 SpitSpawn;
+    Vector3 spitSpawn;
 
     // ----- Floats & Integers -----
 
     // ----- Booleans -----
-    bool IsGrounded;
+    bool isGrounded;
 
     bool Alert;
     private bool FacingRight = true;
@@ -35,12 +38,19 @@ public class StarGremlinScript : MonoBehaviour
 
     public bool Stagger = false;
 
+    // ----- Audio Stuff -----
+    AudioClip FistHit;
+
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+        spriterend = gameObject.GetComponent<SpriteRenderer>();
+
+        FistHit = Resources.Load("Sounds/fisthitdemo") as AudioClip;
 
         Player = GameObject.Find("Player");
+        baseColor = spriterend.color;
 
         CurrentHP = HitPoints;
 
@@ -51,9 +61,9 @@ public class StarGremlinScript : MonoBehaviour
     void Update()
     {
 
-        SpitSpawn.x = gameObject.transform.position.x;
-        SpitSpawn.y = gameObject.transform.position.y + 2;
-        SpitSpawn.z = gameObject.transform.position.z;
+        spitSpawn.x = gameObject.transform.position.x;
+        spitSpawn.y = gameObject.transform.position.y + 2;
+        spitSpawn.z = gameObject.transform.position.z;
 
         // Hit Points
 
@@ -66,11 +76,11 @@ public class StarGremlinScript : MonoBehaviour
 
         if (rb2d.velocity.y == 0)
         {
-            IsGrounded = true;
+            isGrounded = true;
         }
         else
         {
-            IsGrounded = false;
+            isGrounded = false;
         }
 
         //========================================
@@ -95,11 +105,20 @@ public class StarGremlinScript : MonoBehaviour
         Vector2 rightMove = new Vector2(40, 0);
         Vector2 leftMove = new Vector2(-40, 0);
 
-        if (!Stagger)
+        if (Stagger)
         {
-            //if (Mathf.Abs(distance) <)
+            state = State.Idle;
+            SetState();
+        }
 
-            if(Mathf.Abs(distance) < 4.5f && Alert)
+        else if (!Stagger)
+        {
+            if (Stagger)
+            {
+                return;
+            }
+
+            else if(Mathf.Abs(distance) < 4.5f && Alert)
             {
                 rb2d.velocity = Vector2.zero;
 
@@ -107,18 +126,18 @@ public class StarGremlinScript : MonoBehaviour
                 SetState();
             }
 
-            if (Mathf.Abs(distance) > 4.5 && Mathf.Abs(distance) < 14.5f && Alert && IsGrounded || Mathf.Abs(distance) > 21 && Alert && IsGrounded)
+            else if (Mathf.Abs(distance) > 4.5 && Mathf.Abs(distance) < 14.5f && Alert && isGrounded || Mathf.Abs(distance) > 21 && Alert && isGrounded)
             {
                 state = State.Run;
                 SetState();
 
-                if (state == State.Run && FacingRight && !PlayerInvuln && IsGrounded)
+                if (state == State.Run && FacingRight && !PlayerInvuln && isGrounded)
                 {
                     rb2d.velocity = Vector2.zero;
                     rb2d.AddForce(rightMove);
                 }
 
-                if (state == State.Run && !FacingRight && !PlayerInvuln && IsGrounded)
+                if (state == State.Run && !FacingRight && !PlayerInvuln && isGrounded)
                 {
                     rb2d.velocity = Vector2.zero;
                     rb2d.AddForce(leftMove);
@@ -143,12 +162,6 @@ public class StarGremlinScript : MonoBehaviour
             }
         }
 
-        else  if (Stagger)
-        {
-            state = State.Idle;
-            SetState();
-        }
-
         //========================================
         // SPRITE FLIPPING
         //========================================
@@ -168,7 +181,7 @@ public class StarGremlinScript : MonoBehaviour
 
     void SpitAttack()
     {
-        Instantiate(Resources.Load("Prefabs/StarGremlinSun") as GameObject, SpitSpawn, Quaternion.identity);
+        Instantiate(Resources.Load("Prefabs/StarGremlinSun") as GameObject, spitSpawn, Quaternion.identity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -197,10 +210,13 @@ public class StarGremlinScript : MonoBehaviour
     // ----- Fists of Sol -----
     public void LightHit()
     {
-        Vector2 lightForceR = new Vector2(200, 100);
-        Vector2 lightForceL = new Vector2(-200, 100);
+        Vector2 lightForceR = new Vector2(-400, 100);
+        Vector2 lightForceL = new Vector2(400, 100);
 
         rb2d.velocity = Vector2.zero;
+
+        RedFlash();
+        AudioSource.PlayClipAtPoint(FistHit, Camera.main.transform.position, .5f);
 
         if (FacingRight)
         {
@@ -222,8 +238,11 @@ public class StarGremlinScript : MonoBehaviour
 
     public void HeavyHit()
     {
-        Vector2 heavyForceR = new Vector2(400, 400);
-        Vector2 heavyForceL = new Vector2(-400, 400);
+        Vector2 heavyForceR = new Vector2(-600, 600);
+        Vector2 heavyForceL = new Vector2(600, 600);
+
+        RedFlash();
+        AudioSource.PlayClipAtPoint(FistHit, Camera.main.transform.position, .5f);
 
         rb2d.velocity = Vector2.zero;
 
@@ -263,6 +282,19 @@ public class StarGremlinScript : MonoBehaviour
     //========================================
     // MISCELLANEOUS FUNCTIONS
     //========================================
+
+    // ----- Enemy Hit Visual Function -----
+    void RedFlash()
+    {
+        spriterend.color = baseColor;
+        spriterend.color = Color.red;
+        Invoke("ResetColor", 0.5f);
+    }
+
+    void ResetColor()
+    {
+        spriterend.color = baseColor;
+    }
 
     // ----- Sprite Flipping Function -----
 

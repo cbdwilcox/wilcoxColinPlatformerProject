@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class VegaScript : MonoBehaviour
 {
-
+    Color baseColor;
+    SpriteRenderer spriterend;
     public void SetGravZero()
     {
         rb2d.gravityScale = 0;
@@ -87,6 +88,9 @@ public class VegaScript : MonoBehaviour
         WarpNoise = Resources.Load("Sounds/betterwarpnoise") as AudioClip;
 
         Player = GameObject.Find("Player");
+
+        spriterend = gameObject.GetComponent<SpriteRenderer>();
+        baseColor = spriterend.color;
 
         CurrentHP = HitPoints;
 
@@ -219,7 +223,7 @@ public class VegaScript : MonoBehaviour
                     rb2d.gravityScale = 0;
                 }
 
-                Invoke("MoveReset", 2.5f);
+                Invoke("MoveReset", 4.0f);
             }
 
             // ----- Call -----
@@ -452,12 +456,16 @@ public class VegaScript : MonoBehaviour
     // ----- Fists of Sol -----
     public void LightHit()
     {
+        RedFlash();
+
         CurrentHP -= 20;
         AudioSource.PlayClipAtPoint(FistHit, Camera.main.transform.position, .5f);
     }
 
     public void HeavyHit()
     {
+        RedFlash();
+
         CurrentHP -= 50;
         AudioSource.PlayClipAtPoint(FistHit, Camera.main.transform.position, .5f);
     }
@@ -478,8 +486,20 @@ public class VegaScript : MonoBehaviour
     // MISCELLANEOUS FUNCTIONS
     //========================================
 
-    // ----- Sprite Flipping Function -----
+    // ----- Enemy Hit Visual Function -----
+    void RedFlash()
+    {
+        spriterend.color = baseColor;
+        spriterend.color = Color.red;
+        Invoke("ResetColor", 0.5f);
+    }
 
+    void ResetColor()
+    {
+        spriterend.color = baseColor;
+    }
+
+    // ----- Sprite Flipping Function -----
     void ResetStagger()
     {
         Stagger = false;

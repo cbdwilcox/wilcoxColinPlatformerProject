@@ -31,7 +31,7 @@ public class PlayerBasic3Script : StateMachineBehaviour
         anim.SetInteger("BasicState", 0);
 
         EnemyLayers = LayerMask.GetMask("Enemies");
-        AttackPoint = GameObject.Find("SlamPoint").transform;
+        AttackPoint = GameObject.Find("PunchPoint").transform;
         ManaPoint = AttackPoint.position;
     }
 

@@ -30,5 +30,10 @@ public class DynamicPlatLongScript : MonoBehaviour
             rb2d.velocity = Vector2.zero;
             ForceAdd();
         }
+
+        //if (collision.gameObject.layer == 6)
+        //{
+        //    collision.collider.transform.SetParent(transform);
+        //}
     }
 }

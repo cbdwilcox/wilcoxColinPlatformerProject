@@ -12,6 +12,7 @@ TagManager:
   - floatingplat
   - Meteormite
   - killbox
+  - dynplattop
   layers:
   - Default
   - TransparentFX

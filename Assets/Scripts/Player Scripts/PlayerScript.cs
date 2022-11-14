@@ -56,6 +56,8 @@ public class PlayerScript : MonoBehaviour
 
     bool JumpBypass = false;
 
+    bool floatPlat;
+
     Vector3 SunSpawn;
 
     // ----- Layer Masks -----
@@ -74,6 +76,12 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            CurrentHP = 99999;
+        }
+       
+        // -----
 
         SunSpawn = GameObject.Find("PunchPoint").transform.position;
 
@@ -216,7 +224,7 @@ public class PlayerScript : MonoBehaviour
         //========================================
 
         // ----- Sun Sling -----
-        if (Input.GetKeyDown(KeyCode.E) && Mana >= 3)
+        if (Input.GetKeyDown(KeyCode.E) && Mana >= 2)
         {
             Instantiate(Resources.Load("Prefabs/SunBall") as GameObject, SunSpawn, Quaternion.identity);
 
@@ -312,19 +320,23 @@ public class PlayerScript : MonoBehaviour
             PlayerDeath();
         }
 
-        if (collision.gameObject.tag == "floatingplat")
+        if (collision.gameObject.tag == "dynaplattop")
         {
             Debug.Log("this is working");
-            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+            floatPlat = true;
 
-            JumpBypass = true;
-
-            if (rb2d.velocity.y != 0)
-            {
-                rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-            }
+            //if (rb2d.velocity.y != 0)
+            //{
+            //    rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+            //}
 
         }
+
+        //if (collision.gameObject.tag == "dynplattop")
+        //{
+        //    Transform m_currMovingPlatform = collision.gameObject.transform;
+        //    transform.SetParent(m_currMovingPlatform);
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -341,7 +353,7 @@ public class PlayerScript : MonoBehaviour
     {
         Debug.Log("Star has perished...");
 
-        SceneManager.LoadScene(0);
+        GameSystem.GetComponent<GameSystem>().LoadCurrentScene();
     }
 
     //========================================

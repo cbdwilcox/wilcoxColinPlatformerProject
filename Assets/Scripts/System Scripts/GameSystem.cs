@@ -10,6 +10,8 @@ public class GameSystem : MonoBehaviour
 
     //bool Paused = false;
 
+    public int CurrentScene;
+
     void Start()
     {
 
@@ -29,6 +31,11 @@ public class GameSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
 
         //if (Input.GetKeyDown(KeyCode.Escape) && !Paused)
@@ -58,6 +65,11 @@ public class GameSystem : MonoBehaviour
     //    Paused = false;
     //}
 
+
+    public void LoadCurrentScene()
+    {
+        SceneManager.LoadScene(CurrentScene);
+    }
 
     public void LoadTutorial()
     {
