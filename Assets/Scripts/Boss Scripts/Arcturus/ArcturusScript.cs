@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ArcturusScript : MonoBehaviour
 {
@@ -285,6 +287,8 @@ public class ArcturusScript : MonoBehaviour
     void Die()
     {
         Debug.Log("Arcturus has been slain...");
+
+        SceneManager.LoadScene(11);
 
         Destroy(gameObject);
     }
