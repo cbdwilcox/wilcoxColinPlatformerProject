@@ -24,8 +24,17 @@ EditorBuildSettings:
     path: Assets/Scenes/VegaBossStage.unity
     guid: 695ee7f9ae5def84f870ed6ec5584f52
   - enabled: 1
-    path: Assets/Scenes/WinScene.unity
-    guid: 742144302a52ebd4a961014d788a7083
+    path: Assets/Scenes/Crimson1.unity
+    guid: a9172e70f03462e419c4de28579573a7
+  - enabled: 1
+    path: Assets/Scenes/Crimson2.unity
+    guid: f785529837d76b34d84f14f7e6941cb4
+  - enabled: 1
+    path: Assets/Scenes/Crimson3.unity
+    guid: 7fce72385a95587499048f0e2d1eae81
+  - enabled: 1
+    path: Assets/Scenes/ArcturusBossStage.unity
+    guid: 56e207be36d965b4ba14d16e574e489a
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: e15131e5cafa7b14b8195317faba3a42

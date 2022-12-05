@@ -281,6 +281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StarGremlin (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2852071040194466015, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -691,6 +695,10 @@ PrefabInstance:
     - target: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
       propertyPath: m_Name
       value: StarGremlin
+      objectReference: {fileID: 0}
+    - target: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2852071040194466015, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
       propertyPath: m_RootOrder
@@ -1284,6 +1292,10 @@ PrefabInstance:
     - target: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
       propertyPath: m_Name
       value: StarGremlin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2852071040194466004, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2852071040194466015, guid: 39bed79ab5252e04ca62ed229cd7564f, type: 3}
       propertyPath: m_RootOrder
@@ -2058,7 +2070,7 @@ MonoBehaviour:
   anim: {fileID: 1373930797}
   rb2d: {fileID: 1373930798}
   PlayerSpeed: 30
-  Mana: 0
+  Mana: 999
   HitSound: {fileID: 8300000, guid: 5a8d5ccbf19168b4a8d9646717653896, type: 3}
   MaxHP: 0
   CurrentHP: 0
@@ -2174,6 +2186,10 @@ PrefabInstance:
     - target: {fileID: 7776756858472795729, guid: a718662b85d3fa84fb30a2017750aad3, type: 3}
       propertyPath: m_Name
       value: Meteormite
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776756858472795729, guid: a718662b85d3fa84fb30a2017750aad3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7776756858472795740, guid: a718662b85d3fa84fb30a2017750aad3, type: 3}
       propertyPath: m_RootOrder

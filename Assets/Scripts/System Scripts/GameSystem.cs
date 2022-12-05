@@ -73,7 +73,7 @@ public class GameSystem : MonoBehaviour
 
     public void LoadTutorial()
     {
-        SceneManager.LoadScene(7);
+        SceneManager.LoadScene(10);
     }
     public void QuitDesktop()
     {

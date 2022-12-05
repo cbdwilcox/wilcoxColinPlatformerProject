@@ -51,11 +51,27 @@ public class PlayerBasic2Script : StateMachineBehaviour
                 enemy.GetComponent<MeteormiteScript>().LightHit();
             }
 
+            if (enemy.tag == "ArcturusSoldier")
+            {
+                enemy.GetComponent<SoldierScript>().LightHit();
+            }
+
+            if (enemy.tag == "NovaGremlin")
+            {
+                enemy.GetComponent<NovaGremlinScript>().LightHit();
+            }
+
             // ----- Bosses -----
 
             if (enemy.tag == "Vega")
             {
                 enemy.GetComponent<VegaScript>().LightHit();
+                Debug.Log("Hit Complete");
+            }
+
+            if (enemy.tag == "Arcturus")
+            {
+                enemy.GetComponent<ArcturusScript>().LightHit();
                 Debug.Log("Hit Complete");
             }
 

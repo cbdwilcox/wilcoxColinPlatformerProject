@@ -93,6 +93,16 @@ public class PlayerSunSlingScript : MonoBehaviour
                     enemy.GetComponent<MeteormiteScript>().HeavyHit();
                 }
 
+                if (enemy.tag == "ArcturusSoldier")
+                {
+                    enemy.GetComponent<SoldierScript>().HeavyHit();
+                }
+
+                if (enemy.tag == "NovaGremlin")
+                {
+                    enemy.GetComponent<NovaGremlinScript>().HeavyHit();
+                }
+
                 // ----- Bosses -----
 
                 if (enemy.tag == "Vega")
@@ -101,10 +111,16 @@ public class PlayerSunSlingScript : MonoBehaviour
                     Debug.Log("Hit Complete");
                 }
 
+                if (enemy.tag == "Arcturus")
+                {
+                    enemy.GetComponent<ArcturusScript>().HeavyHit();
+                    Debug.Log("Hit Complete");
+                }
+
                 Physics2D.IgnoreCollision(gameObject.GetComponent<CircleCollider2D>(), enemy.GetComponent<CapsuleCollider2D>());
             }
 
-            Invoke("ResetCooldown", 1);
+            //Invoke("ResetCooldown", 1);
         }
     }
 

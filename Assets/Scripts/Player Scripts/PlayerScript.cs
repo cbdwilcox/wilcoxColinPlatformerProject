@@ -389,4 +389,12 @@ public class PlayerScript : MonoBehaviour
     {
         anim.SetInteger("State", (int)state);
     }    
+
+    //public void PunchMomentum()
+    //{
+    //    if (FacingRight)
+    //    {
+    //        gameObject.transform.position = 
+    //    }
+    //}
 }

@@ -13,6 +13,9 @@ TagManager:
   - Meteormite
   - killbox
   - dynplattop
+  - ArcturusSoldier
+  - NovaGremlin
+  - Arcturus
   layers:
   - Default
   - TransparentFX
