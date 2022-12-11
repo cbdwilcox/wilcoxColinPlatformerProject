@@ -103,6 +103,16 @@ public class PlayerSunSlingScript : MonoBehaviour
                     enemy.GetComponent<NovaGremlinScript>().HeavyHit();
                 }
 
+                if (enemy.tag == "EliteSoldier")
+                {
+                    enemy.GetComponent<EliteScript>().HeavyHit();
+                }
+
+                if (enemy.tag == "Leech")
+                {
+                    enemy.GetComponent<VoidLeechScript>().HeavyHit();
+                }
+
                 // ----- Bosses -----
 
                 if (enemy.tag == "Vega")

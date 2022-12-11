@@ -16,6 +16,12 @@ TagManager:
   - ArcturusSoldier
   - NovaGremlin
   - Arcturus
+  - VoidWorm
+  - VoidWormA
+  - VoidWormB
+  - EliteSoldier
+  - Leech
+  - Hands
   layers:
   - Default
   - TransparentFX
@@ -30,7 +36,7 @@ TagManager:
   - PlayerProjectiles
   - Platforms
   - Pickups
-  - 
+  - Hands
   - 
   - 
   - 

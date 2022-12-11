@@ -41,4 +41,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinScene.unity
     guid: 742144302a52ebd4a961014d788a7083
+  - enabled: 1
+    path: Assets/Scenes/Horizon1.unity
+    guid: 50fea8fb20a579c4ab33e349706b9d44
+  - enabled: 1
+    path: Assets/Scenes/Horizon2.unity
+    guid: 734d59541284efb4a91b2508552424a9
+  - enabled: 1
+    path: Assets/Scenes/Horizon3.unity
+    guid: 9ee0ca2f66addab4da7c9fc102276027
+  - enabled: 1
+    path: Assets/Scenes/StephensonBossStage.unity
+    guid: bcd721dbc53650b449e693cb468f7729
   m_configObjects: {}

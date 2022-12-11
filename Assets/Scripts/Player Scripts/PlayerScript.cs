@@ -48,11 +48,11 @@ public class PlayerScript : MonoBehaviour
 
     // ----- Booleans -----
     private bool IsGrounded;
-    private bool FacingRight = true;
+    public bool FacingRight = true;
 
     private bool Invuln;
 
-    private bool IsDashing = false;
+    public bool IsDashing = false;
 
     bool JumpBypass = false;
 
@@ -178,27 +178,6 @@ public class PlayerScript : MonoBehaviour
 
         }
 
-        // ----- Solar Slide Ability -----
-        if (Input.GetMouseButtonDown(1) && !IsDashing)
-        {
-            StartCoroutine(CollisionInvuln());
-
-            Vector2 slideLeft = new Vector2(-1500, 0);
-            Vector2 slideRight = new Vector2(1500, 0);
-
-            if (FacingRight)
-            {
-                rb2d.AddForce(slideRight);
-            }
-
-            if (!FacingRight)
-            {
-                rb2d.AddForce(slideLeft);
-            }
-
-            IsDashing = true;
-        }
-
         //========================================
         // PLAYER BASIC COMBO
         //========================================
@@ -284,6 +263,20 @@ public class PlayerScript : MonoBehaviour
         StartCoroutine(CollisionInvuln());
     }
 
+    public void LeechHit()
+    {
+
+        CurrentHP -= 10;
+        AudioSource.PlayClipAtPoint(HitSound, Camera.main.transform.position, .5f);
+
+        StartCoroutine(CollisionInvuln());
+    }
+
+    public void CollisionInvulnBypass()
+    {
+        StartCoroutine(CollisionInvuln());
+    }
+
     // ----- Vega Boss -----
 
     public void DaggerHit()
@@ -349,7 +342,7 @@ public class PlayerScript : MonoBehaviour
     //========================================
     // DEATH FUNCTION
     //========================================
-    void PlayerDeath()
+    public void PlayerDeath()
     {
         Debug.Log("Star has perished...");
 

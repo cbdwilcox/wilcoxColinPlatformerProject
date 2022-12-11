@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 249779824}
   - component: {fileID: 249779823}
   - component: {fileID: 249779822}
+  - component: {fileID: 249779828}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -337,6 +338,8 @@ MonoBehaviour:
   rb2d: {fileID: 249779824}
   PlayerSpeed: 30
   Mana: 999
+  FacingRight: 1
+  IsDashing: 0
   HitSound: {fileID: 8300000, guid: 5a8d5ccbf19168b4a8d9646717653896, type: 3}
   MaxHP: 0
   CurrentHP: 0
@@ -411,6 +414,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &249779828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249779821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b9d244b56f4444dadb01fbc5961e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &330661498
 PrefabInstance:
   m_ObjectHideFlags: 0

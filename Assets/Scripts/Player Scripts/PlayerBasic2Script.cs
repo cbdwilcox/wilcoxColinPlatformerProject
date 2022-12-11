@@ -61,6 +61,16 @@ public class PlayerBasic2Script : StateMachineBehaviour
                 enemy.GetComponent<NovaGremlinScript>().LightHit();
             }
 
+            if (enemy.tag == "EliteSoldier")
+            {
+                enemy.GetComponent<EliteScript>().LightHit();
+            }
+
+            if (enemy.tag == "Leech")
+            {
+                enemy.GetComponent<VoidLeechScript>().LightHit();
+            }
+
             // ----- Bosses -----
 
             if (enemy.tag == "Vega")

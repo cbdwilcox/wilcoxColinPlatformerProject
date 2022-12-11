@@ -72,7 +72,17 @@ public class PlayerBasic3Script : StateMachineBehaviour
 
                 if (enemy.tag == "NovaGremlin")
                 {
-                    enemy.GetComponent<NovaGremlinScript>().LightHit();
+                    enemy.GetComponent<NovaGremlinScript>().HeavyHit();
+                }
+
+                if (enemy.tag == "EliteSoldier")
+                {
+                    enemy.GetComponent<EliteScript>().HeavyHit();
+                }
+
+                if (enemy.tag == "Leech")
+                {
+                    enemy.GetComponent<VoidLeechScript>().LightHit();
                 }
 
                 // ----- Bosses -----
@@ -85,7 +95,7 @@ public class PlayerBasic3Script : StateMachineBehaviour
 
                 if (enemy.tag == "Arcturus")
                 {
-                    enemy.GetComponent<ArcturusScript>().LightHit();
+                    enemy.GetComponent<ArcturusScript>().HeavyHit();
                     Debug.Log("Hit Complete");
                 }
 
