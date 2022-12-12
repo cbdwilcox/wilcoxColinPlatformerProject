@@ -90,6 +90,11 @@ public class GameSystem : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void LoadOpeningCutscene()
+    {
+        SceneManager.LoadScene(15);
+    }
+
     public void LoadAst1()
     {
         SceneManager.LoadScene(2);

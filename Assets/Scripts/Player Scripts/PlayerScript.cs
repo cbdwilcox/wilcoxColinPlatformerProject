@@ -330,6 +330,11 @@ public class PlayerScript : MonoBehaviour
         //    Transform m_currMovingPlatform = collision.gameObject.transform;
         //    transform.SetParent(m_currMovingPlatform);
         //}
+
+        if (collision.gameObject.tag == "WinBox")
+        {
+            SceneManager.LoadScene(19);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)

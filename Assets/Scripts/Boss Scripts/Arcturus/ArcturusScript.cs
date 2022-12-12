@@ -288,7 +288,7 @@ public class ArcturusScript : MonoBehaviour
     {
         Debug.Log("Arcturus has been slain...");
 
-        SceneManager.LoadScene(12);
+        SceneManager.LoadScene(11);
 
         Destroy(gameObject);
     }

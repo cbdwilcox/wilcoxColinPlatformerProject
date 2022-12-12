@@ -22,6 +22,7 @@ TagManager:
   - EliteSoldier
   - Leech
   - Hands
+  - WinBox
   layers:
   - Default
   - TransparentFX

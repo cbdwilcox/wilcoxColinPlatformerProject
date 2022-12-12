@@ -912,6 +912,8 @@ MonoBehaviour:
   rb2d: {fileID: 281868997}
   PlayerSpeed: 30
   Mana: 0
+  FacingRight: 1
+  IsDashing: 0
   HitSound: {fileID: 8300000, guid: 5a8d5ccbf19168b4a8d9646717653896, type: 3}
   MaxHP: 0
   CurrentHP: 0
@@ -1650,7 +1652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03bd7b7ac6d12e458e6f05c3dd1fd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextScene: 5
+  NextScene: 16
 --- !u!58 &1030973541
 CircleCollider2D:
   m_ObjectHideFlags: 0
